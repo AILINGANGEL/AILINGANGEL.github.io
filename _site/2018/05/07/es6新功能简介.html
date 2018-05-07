@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Es6新功能简介 | 小飞侠的博客</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Es6新功能简介" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1.变量 变量的声明 var =&gt; let const (1) var 不支持作用域(全局作用域,在前端里就是window 函数作用域)的概念" />
+<meta property="og:description" content="1.变量 变量的声明 var =&gt; let const (1) var 不支持作用域(全局作用域,在前端里就是window 函数作用域)的概念" />
+<link rel="canonical" href="http://localhost:4000/2018/05/07/es6%E6%96%B0%E5%8A%9F%E8%83%BD%E7%AE%80%E4%BB%8B.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/07/es6%E6%96%B0%E5%8A%9F%E8%83%BD%E7%AE%80%E4%BB%8B.html" />
+<meta property="og:site_name" content="小飞侠的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-07T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"1.变量 变量的声明 var =&gt; let const (1) var 不支持作用域(全局作用域,在前端里就是window 函数作用域)的概念","@type":"BlogPosting","url":"http://localhost:4000/2018/05/07/es6%E6%96%B0%E5%8A%9F%E8%83%BD%E7%AE%80%E4%BB%8B.html","headline":"Es6新功能简介","dateModified":"2018-05-07T00:00:00+08:00","datePublished":"2018-05-07T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/07/es6%E6%96%B0%E5%8A%9F%E8%83%BD%E7%AE%80%E4%BB%8B.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=6ba25f9e7022b86b7edc39d0b24febf26d702a7a">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">小飞侠的博客</h1>
+        <p class="header">一个女码农的自我修养</p>
+
+        <ul>
+          
+          <li><a class="buttons github" href="http://github.com/AILINGANGEL/AILINGANGEL.github.io">View On GitHub</a></li>
+        </ul>
+
+        
+          <p class="header">This project is maintained by <a class="header name" href="http://github.com/AILINGANGEL">AILINGANGEL</a></p>
+        
+
+        
+      </header>
+
+      <section>
+        <h3 id="1变量">1.变量</h3>
+<blockquote>
+  <ul>
+    <li>变量的声明 var =&gt; let const</li>
+    <li>(1) var 不支持作用域(全局作用域,在前端里就是window 函数作用域)的概念</li>
+  </ul>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//不要污染全局作用域</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{}</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="c1">// 3</span>
+<span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">})();</span> <span class="c1">//制造函数作用域,太麻烦了</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>let不会让变量作用在全局</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//拿不到1了</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{}</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="c1">// i is not defined</span>
+<span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span> <span class="c1">//大括号就是一个作用域</span>
+
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+  <span class="p">},</span> <span class="mi">1000</span> <span class="o">*</span> <span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span> <span class="c1">//打出来的全部是3</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">){</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">1000</span> <span class="o">*</span> <span class="nx">i</span><span class="p">);</span>
+  <span class="p">})(</span><span class="nx">i</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(2)let, const 不支持在同一个作用域中重复定义</p>
+  <ul>
+    <li>暂存死区,如果作用域中声明过这样一个变量，当前变量会保存在当前作用域下</li>
+  </ul>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="c1">//a is not defined</span>
+  <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(3)let 不支持变量提升</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="c1">// a is not defined</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(4)var 不支持声明常量, let 可以修改 const不支持修改(修改是指不能修改引用地址)</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">PI</span> <span class="o">=</span> <span class="mf">3.14</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">{</span><span class="na">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">//ok</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1">// error</span>
+
+</code></pre></div></div>
+
+<h3 id="2解构赋值">2.解构赋值</h3>
+<blockquote>
+  <p>结构相同的可以将对应的内容拿出来</p>
+</blockquote>
+
+<blockquote>
+  <ul>
+    <li>具有声明功能</li>
+  </ul>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="p">[</span><span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'test'</span><span class="p">,</span> <span class="mi">9</span><span class="p">];</span>
+<span class="kd">let</span> <span class="p">[</span><span class="nx">age</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'test'</span><span class="p">,</span> <span class="mi">9</span><span class="p">];</span> <span class="c1">//age 取到了'test'而不是9</span>
+<span class="kd">let</span> <span class="p">[,</span><span class="nx">age</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'test'</span><span class="p">,</span> <span class="mi">9</span><span class="p">];</span> <span class="c1">//只需要第二个</span>
+</code></pre></div></div>
+
+<blockquote>
+  <ul>
+    <li>对象解构</li>
+  </ul>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="p">{</span><span class="nx">age</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="s1">'test'</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span><span class="mi">9</span><span class="p">};</span>
+<span class="c1">//解构可以重新赋值其他名字， 冒号</span>
+<span class="kd">let</span> <span class="p">{</span><span class="na">default</span><span class="p">:</span><span class="nx">d</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="s1">'test'</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span> <span class="na">default</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
+<span class="c1">//解构获取默认值,等号</span>
+<span class="kd">let</span> <span class="p">{</span><span class="nx">address</span><span class="o">=</span><span class="s1">'五道口'</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="s1">'test'</span><span class="p">,</span> <span class="na">age</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span> <span class="na">default</span><span class="p">:</span> <span class="mi">1</span><span class="p">};</span>
+
+<span class="kd">let</span> <span class="p">[,,{</span><span class="na">hobby</span><span class="p">:[</span><span class="nx">val</span><span class="p">]}]</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s1">'zfpx'</span><span class="p">},</span>
+  <span class="p">{</span><span class="na">age</span><span class="p">:</span> <span class="mi">9</span><span class="p">}.</span>
+  <span class="p">{</span>
+    <span class="na">hobby</span><span class="p">:</span> <span class="p">[</span><span class="s1">'睡觉'</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">val</span><span class="p">)</span> <span class="c1">//'睡觉'</span>
+</code></pre></div></div>
+
+<h3 id="3模板字符串-template-string">3.模板字符串 template string</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="s1">'angel'</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">age</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">今年</span><span class="p">${</span><span class="nx">age</span><span class="p">}</span><span class="s2">岁了`</span><span class="p">;</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(1)模拟一个模板字符串的实现</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">'(</span><span class="se">\'</span><span class="s1">${name}</span><span class="se">\'</span><span class="s1">)</span><span class="se">\'</span><span class="s1">今年(${age})岁了'</span><span class="p">;</span>
+<span class="nx">str</span> <span class="o">=</span> <span class="nx">str</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/</span><span class="se">\$\{([^</span><span class="sr">}</span><span class="se">]</span><span class="sr">*</span><span class="se">)\}</span><span class="sr">/g</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="k">return</span> <span class="kr">eval</span><span class="p">(</span><span class="kr">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(2)带标签的模板字符串</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">name</span> <span class="o">=</span> <span class="s1">'angel'</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">age</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">fn</span><span class="p">(</span><span class="nx">strings</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">str</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">strings</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"('"</span> <span class="o">+</span> <span class="nx">args</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">")'"</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="nx">str</span> <span class="o">+=</span> <span class="nx">strings</span><span class="p">[</span><span class="nx">strings</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="nx">fn</span><span class="s2">`hello, </span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">今年</span><span class="p">${</span><span class="nx">age</span><span class="p">}</span><span class="s2">岁了`</span><span class="p">;</span><span class="c1">//带标签的模板字符串</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(3)模板字符串可以换行</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="p">[</span><span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'angel'</span><span class="p">,</span> <span class="mi">9</span><span class="p">];</span>
+<span class="kd">function</span> <span class="nx">pre</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="s1">'$'</span> <span class="o">+</span> <span class="nx">value</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">`&lt;ul&gt;
+  &lt;li&gt;</span><span class="p">${</span><span class="nx">pre</span><span class="p">(</span><span class="nx">name</span><span class="p">)}</span><span class="s2">&lt;/li&gt;
+  &lt;li&gt;</span><span class="p">${</span><span class="nx">pre</span><span class="p">(</span><span class="nx">age</span><span class="p">)}</span><span class="s2">&lt;/li&gt;
+&lt;/ul&gt;`</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">str</span><span class="p">);</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(4)字符串新方法 padStart padEnd</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Data</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">m</span> <span class="o">=</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">();</span>
+
+<span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">y</span><span class="p">}</span><span class="s2">年</span><span class="p">${</span><span class="nx">m</span><span class="p">}</span><span class="s2">月</span><span class="p">${</span><span class="nx">d</span><span class="p">}</span><span class="s2">日`</span><span class="p">;</span> <span class="c1">//2018年5月6日</span>
+<span class="kd">let</span> <span class="nx">str</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">y</span><span class="p">}</span><span class="s2">年</span><span class="p">${</span><span class="nx">m</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">padStart</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)}</span><span class="s2">月</span><span class="p">${</span><span class="nx">d</span><span class="p">.</span><span class="nx">toString</span><span class="p">().</span><span class="nx">padStart</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)}</span><span class="s2">日`</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="4函数">4.函数</h3>
+<blockquote>
+  <p>(1)可以实现默认参数</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">ajax</span><span class="p">(</span><span class="nx">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nx">b</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">)</span> <span class="c1">// 3, 2</span>
+<span class="p">}</span>
+<span class="nx">ajax</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(2)参数的剩余, 剩余运算符</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">currency</span><span class="p">,</span> <span class="p">...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span> <span class="c1">//</span>
+  <span class="k">return</span> <span class="nx">currency</span> <span class="o">+</span> <span class="kr">eval</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">'+'</span><span class="p">));</span>
+<span class="p">}</span>
+<span class="nx">sum</span><span class="p">(</span><span class="s1">'$'</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>(3)箭头函数, 箭头函数不用function关键字 箭头函数不写return 可以不写大括号 箭头函数如果只有一个参数可以省略小括号
+//常规函数会变量提升</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{};</span>
+
+<span class="kd">function</span> <span class="nx">a</span> <span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{};</span> <span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">=&gt;</span> <span class="p">{};</span>
+
+<span class="kd">function</span> <span class="nx">a</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="nx">a</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span> <span class="o">=&gt;</span> <span class="p">({</span><span class="na">name</span><span class="p">:</span> <span class="nx">a</span><span class="p">});</span> <span class="c1">//如果要返回对象就要加上(),否则花括号会被认为是一个函数体</span>
+</code></pre></div></div>
+
+<blockquote>
+  <ul>
+    <li>函数可以返回函数</li>
+    <li>高阶函数 函数可以当做参数传递 或者 函数返回函数</li>
+  </ul>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">a</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <ul>
+    <li>箭头函数不用function关键字</li>
+    <li>箭头函数不写return 可以不写大括号</li>
+    <li>箭头函数如果只有一个参数可以省略小括号</li>
+  </ul>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">x</span> <span class="o">=&gt;</span> <span class="nx">y</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span><span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">consolelog</span><span class="p">(</span><span class="nx">a</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">));</span>
+</code></pre></div></div>
+
+<blockquote>
+  <ul>
+    <li>闭包: 作用域不释放</li>
+    <li>函数执行的一瞬间也叫闭包</li>
+    <li>外部变量拿到了函数的返回值是一个引用数据类型, 被外部变量接收, 这个作用域不能被释放</li>
+  </ul>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">()</span>
+
+<span class="c1">//箭头函数内部没有this指向, 箭头没有arguments</span>
+<span class="c1">//1.谁调用,this就是谁</span>
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">fn</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span> <span class="c1">// obj</span>
+<span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span><span class="p">;</span>
+<span class="nx">fu</span><span class="p">();</span> <span class="c1">// window;</span>
+
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">fn</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span> <span class="c1">// undefined</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">fn</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span><span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span> <span class="c1">// 1</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>箭头函数中没有this, this是指上一级</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">//不会声明到全局上</span>
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="na">fn</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span><span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">a</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">obj</span><span class="p">.</span><span class="nx">fn</span><span class="p">()</span> <span class="c1">// undefined</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>箭头函数没有arguments,使用剩余运算符</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">args</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">ajax</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="5展开运算符-">5.展开运算符 …</h3>
+<blockquote>
+  <p>vs 剩余运算符…</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">b</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+ <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">d</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">a</span><span class="p">(...</span><span class="nx">args</span><span class="p">)</span> <span class="p">{</span> <span class="c1">//剩余运算符</span>
+  <span class="kd">let</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+  <span class="nx">b</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">arr</span><span class="p">);</span>
+  <span class="nx">b</span><span class="p">(...</span><span class="nx">arr</span><span class="p">);</span> <span class="c1">//把数组展开</span>
+<span class="p">}</span>
+<span class="nx">a</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>call apply bind可以改变this指向</p>
+</blockquote>
+
+<blockquote>
+  <p>对象也可以展开 深拷贝和浅拷贝
+…只会拷贝一层 如果有多层的情况 需要一层层的展开</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s1">'test'</span><span class="p">};</span>
+<span class="kd">let</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="p">{</span><span class="na">age</span><span class="p">:</span> <span class="mi">9</span><span class="p">};</span>
+<span class="kd">let</span> <span class="nx">obj3</span> <span class="o">=</span> <span class="p">{...</span><span class="nx">obj1</span><span class="p">,</span> <span class="p">...</span><span class="nx">obj2</span><span class="p">};</span> <span class="c1">//合并后的结果</span>
+<span class="nx">obj3</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'angel'</span><span class="p">;</span> <span class="c1">//不影响obj1</span>
+
+<span class="kd">let</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="s1">'test'</span><span class="p">}};</span>
+<span class="kd">let</span> <span class="nx">obj2</span> <span class="o">=</span> <span class="p">{</span><span class="na">age</span><span class="p">:</span> <span class="mi">9</span><span class="p">};</span>
+<span class="kd">let</span> <span class="nx">obj3</span> <span class="o">=</span> <span class="p">{...</span><span class="nx">obj1</span><span class="p">,</span> <span class="p">...</span><span class="nx">obj2</span><span class="p">};</span>
+<span class="nx">obj3</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">'angel'</span><span class="p">;</span> <span class="c1">//obj1变了,说明这个是浅拷贝</span>
+
+<span class="c1">//深拷贝</span>
+<span class="c1">//JSON.parse(JSON.stringify) 并不支持函数和正则</span>
+<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="p">{</span><span class="na">name</span><span class="p">:</span> <span class="mi">1</span><span class="p">}};</span>
+<span class="kd">let</span> <span class="nx">obj1</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">obj</span><span class="p">));</span>
+
+<span class="c1">//递归拷贝</span>
+<span class="kd">function</span> <span class="nx">deepClone</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">//typeof function(){} =&gt; function 函数不需要重新拷贝 函数没有引用关系</span>
+  <span class="k">if</span><span class="err">（</span><span class="k">typeof</span> <span class="nx">obj</span> <span class="o">!==</span> <span class="s1">'object'</span><span class="p">)</span> <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+  <span class="c1">//null</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span> <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="c1">//处理日期和正则</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span> <span class="k">instanceof</span> <span class="nb">RegExp</span><span class="p">)</span> <span class="k">return</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span> <span class="k">instanceof</span> <span class="nb">Date</span><span class="p">)</span> <span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+
+  <span class="kd">let</span> <span class="nx">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">obj</span><span class="p">.</span><span class="kd">constructor</span><span class="p">();</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">instance</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">===</span> <span class="s1">'object'</span><span class="p">?</span> <span class="nx">deepClone</span><span class="p">(</span><span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span> <span class="p">:</span> <span class="nx">obj</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">instance</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
