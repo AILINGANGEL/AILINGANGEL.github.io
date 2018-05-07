@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Promise | 小飞侠的博客</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Promise" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="什么叫promise 解决什么问题 典型的有三个状态: resolved rejected pending" />
+<meta property="og:description" content="什么叫promise 解决什么问题 典型的有三个状态: resolved rejected pending" />
+<link rel="canonical" href="http://localhost:4000/2018/05/07/promise.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/07/promise.html" />
+<meta property="og:site_name" content="小飞侠的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-07T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"什么叫promise 解决什么问题 典型的有三个状态: resolved rejected pending","@type":"BlogPosting","url":"http://localhost:4000/2018/05/07/promise.html","headline":"Promise","dateModified":"2018-05-07T00:00:00+08:00","datePublished":"2018-05-07T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/07/promise.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=bc4b17b450924a1607c74c200683f88262366c1f">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">小飞侠的博客</h1>
+        <p class="header">一个女码农的自我修养</p>
+
+        <ul>
+          
+          <li><a class="buttons github" href="http://github.com/AILINGANGEL/AILINGANGEL.github.io">View On GitHub</a></li>
+        </ul>
+
+        
+          <p class="header">This project is maintained by <a class="header name" href="http://github.com/AILINGANGEL">AILINGANGEL</a></p>
+        
+
+        
+      </header>
+
+      <section>
+        <p>什么叫promise 解决什么问题
+典型的有三个状态:  resolved rejected pending</p>
+
+<p>promise实现有很多种 es6 -&gt; Promise</p>
+
+<p>promise解决的问题有</p>
+<ul>
+  <li>回调地域</li>
+  <li>解决同步并发异步在同一时刻内获取并发的结果</li>
+  <li>链式调用</li>
+</ul>
+
+<blockquote>
+  <p>promise中放了一个函数， 函数executor 执行器
+resolve和reject都是函数，调用后可以让状态进行改变</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="nx">resolve</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span> <span class="c1">//默认只会执行第一个方法,后面的会被忽略</span>
+    <span class="nx">reject</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+<span class="p">})</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="c1">//1 2</span>
+
+</code></pre></div></div>
+
+<blockquote>
+  <p>所有的Promise的executor都是同步执行的
+每个promise上都有一个then方法，then方法有两个参数,一个成功的处理函数，一个失败的处理函数</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">p</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'success'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>例子: 抛硬币 正：买包 反：不买</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">flipCoin</span><span class="p">(</span><span class="nx">buy</span><span class="p">,</span> <span class="nx">noBuy</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">setTimeout</span><span class="p">(()</span><span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">buy</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">noBuy</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">fn</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'买'</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">let</span> <span class="nx">noBuy</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'不买'</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">flipCoin</span><span class="p">(</span><span class="nx">buy</span><span class="p">,</span> <span class="nx">noBuy</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">flipCoin</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">){</span>
+        <span class="nx">setTimeout</span><span class="p">(()</span><span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">resolve</span><span class="p">();</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">reject</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">flipCoin</span><span class="p">().</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'买'</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'不买'</span><span class="p">);</span>
+<span class="p">});</span>
+
+</code></pre></div></div>
+
+<blockquote>
+  <p>需求: 读取一个文件1.txt 文件中存的是2.txt 再读取2.txt 读取2.txt的结果“我很帅”</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">);</span>
+<span class="c1">//回调地域, 第二次请求是基于第一次的</span>
+<span class="c1">// fs.readFile('1.txt', 'utf8', function(err, data){</span>
+<span class="c1">//     if (err) return console.log(err);</span>
+<span class="c1">//     console.log(data);</span>
+<span class="c1">//     fs.readFile(data, 'utf8', function(err, data){</span>
+<span class="c1">//         if (err) return console.log(err);</span>
+<span class="c1">//         console.log(data);</span>
+<span class="c1">//     });</span>
+<span class="c1">// })</span>
+
+<span class="kd">function</span> <span class="nx">read</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+        <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">path</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">return</span> <span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+            <span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+<span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">read</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> <span class="c1">//再次返回promise, 如果是return 1返回的不是promise都认为是成功的</span>
+<span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="c1">//如果return 100, 则会走到下一个then的成功</span>
+    <span class="c1">//throw error(), 走到下一个then的失败</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<blockquote>
+  <ul>
+    <li>如果第一个promise执行完的结果返回的依旧是promise就可以实现链式调用,如果返回失败就执行失败的函数</li>
+    <li>promise第一次then无论返回的是什么（不是promise）都会作为下一次then的成功态</li>
+    <li>执行时发生了错误也会走到失败</li>
+    <li>catch可以捕获Promise中的错误, 如果相邻的捕获了就不会走到catch</li>
+  </ul>
+</blockquote>
+
+<blockquote>
+  <p>使用catch统一处理error</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">read</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> <span class="c1">//再次返回promise, 如果是return 1返回的不是promise都认为是成功的</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="c1">//有错误都走这里</span>
+<span class="p">});</span>
+
+<span class="c1">//自己有error就走自己的，没有就走catch</span>
+<span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">read</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> <span class="c1">//再次返回promise, 如果是return 1返回的不是promise都认为是成功的</span>
+<span class="p">},</span> <span class="nx">err</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'here'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span><span class="c1">//有错误就走这里，不走catch</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">//</span>
+<span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">read</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> <span class="c1">//再次返回promise, 如果是return 1返回的不是promise都认为是成功的</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">}).</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="c1">//有错误都走这里</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'hahah'</span><span class="p">);</span> <span class="c1">//如过有错误也会走到这里，因为没有返回值，被认为是下一个then的成功态</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Promise.resolve Promise.reject</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">read</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> <span class="c1">//再次返回promise, 如果是return 1返回的不是promise都认为是成功的</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+   <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> <span class="c1">//把任何一个东西包装成promise</span>
+<span class="p">}).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'hahah'</span><span class="p">);</span>
+<span class="p">},</span> <span class="nx">err</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">);</span>
+<span class="p">});</span>
+
+
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">'./1.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">'./2.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>all方法会再次返回一个promise实例, 如果数组中的promise有一个失败了,这个promise就失败了，如果都成功了才算成功</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">,</span> <span class="nx">read</span><span class="p">(</span><span class="s1">'2.txt'</span><span class="p">))]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>race谁先回来就用谁的</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Promise</span><span class="p">.</span><span class="nx">race</span><span class="p">([</span><span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">,</span> <span class="nx">read</span><span class="p">(</span><span class="s1">'2.txt'</span><span class="p">))]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">);</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
