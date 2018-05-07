@@ -20,7 +20,7 @@
 {"description":"什么叫promise 解决什么问题 典型的有三个状态: resolved rejected pending","@type":"BlogPosting","url":"http://localhost:4000/2018/05/07/promise.html","headline":"Promise","dateModified":"2018-05-07T00:00:00+08:00","datePublished":"2018-05-07T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/07/promise.html"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=bc4b17b450924a1607c74c200683f88262366c1f">
+    <link rel="stylesheet" href="/assets/css/style.css?v=06054f34cf1769deaa310a433f67aaa4f225649b">
     <script src="/assets/js/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -218,21 +218,21 @@ resolve和reject都是函数，调用后可以让状态进行改变</p>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">);</span>
 <span class="p">});</span>
 
-
-<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">'./1.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span><span class="p">){</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">})</span>
-
-<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">'./2.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span><span class="p">){</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
-<span class="p">})</span>
 </code></pre></div></div>
 
 <blockquote>
   <p>all方法会再次返回一个promise实例, 如果数组中的promise有一个失败了,这个promise就失败了，如果都成功了才算成功</p>
 </blockquote>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">,</span> <span class="nx">read</span><span class="p">(</span><span class="s1">'2.txt'</span><span class="p">))]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">'./1.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="s1">'./2.txt'</span><span class="p">,</span> <span class="s1">'utf8'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">err</span><span class="p">){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+<span class="p">})</span>
+
+<span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">([</span><span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">,</span> <span class="nx">read</span><span class="p">(</span><span class="s1">'2.txt'</span><span class="p">))]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">);</span>
@@ -243,7 +243,7 @@ resolve和reject都是函数，调用后可以让状态进行改变</p>
   <p>race谁先回来就用谁的</p>
 </blockquote>
 
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Promise</span><span class="p">.</span><span class="nx">race</span><span class="p">([</span><span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">,</span> <span class="nx">read</span><span class="p">(</span><span class="s1">'2.txt'</span><span class="p">))]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Promise</span><span class="p">.</span><span class="nx">race</span><span class="p">([</span><span class="nx">read</span><span class="p">(</span><span class="s1">'1.txt'</span><span class="p">),</span> <span class="nx">read</span><span class="p">(</span><span class="s1">'2.txt'</span><span class="p">)]).</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 <span class="p">},</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span><span class="o">=&gt;</span><span class="p">{</span>
     <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'error'</span><span class="p">);</span>
