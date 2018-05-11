@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>修改移动端键盘的文字为搜索 | 小飞侠的博客</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="修改移动端键盘的文字为搜索" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="开发移动端页面的时候经常需要直接点击手机键盘的按键来直接触发事件，尤其是在Input框中输入内容之后直接搜索" />
+<meta property="og:description" content="开发移动端页面的时候经常需要直接点击手机键盘的按键来直接触发事件，尤其是在Input框中输入内容之后直接搜索" />
+<link rel="canonical" href="http://localhost:4000/2018/05/10/%E4%BF%AE%E6%94%B9%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%94%AE%E7%9B%98%E7%9A%84%E6%96%87%E5%AD%97%E4%B8%BA%E6%90%9C%E7%B4%A2.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/10/%E4%BF%AE%E6%94%B9%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%94%AE%E7%9B%98%E7%9A%84%E6%96%87%E5%AD%97%E4%B8%BA%E6%90%9C%E7%B4%A2.html" />
+<meta property="og:site_name" content="小飞侠的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-10T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"开发移动端页面的时候经常需要直接点击手机键盘的按键来直接触发事件，尤其是在Input框中输入内容之后直接搜索","@type":"BlogPosting","url":"http://localhost:4000/2018/05/10/%E4%BF%AE%E6%94%B9%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%94%AE%E7%9B%98%E7%9A%84%E6%96%87%E5%AD%97%E4%B8%BA%E6%90%9C%E7%B4%A2.html","headline":"修改移动端键盘的文字为搜索","dateModified":"2018-05-10T00:00:00+08:00","datePublished":"2018-05-10T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/10/%E4%BF%AE%E6%94%B9%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%94%AE%E7%9B%98%E7%9A%84%E6%96%87%E5%AD%97%E4%B8%BA%E6%90%9C%E7%B4%A2.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=e293d31a9410f8784ff80b03e2f4bc2955519a3e">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">小飞侠的博客</h1>
+        <p class="header">一个女码农的自我修养</p>
+
+        <ul>
+          
+          <li><a class="buttons github" href="http://github.com/AILINGANGEL/AILINGANGEL.github.io">View On GitHub</a></li>
+        </ul>
+
+        
+          <p class="header">This project is maintained by <a class="header name" href="http://github.com/AILINGANGEL">AILINGANGEL</a></p>
+        
+
+        
+      </header>
+
+      <section>
+        <p>开发移动端页面的时候经常需要直接点击手机键盘的按键来直接触发事件，尤其是在Input框中输入内容之后直接搜索</p>
+
+<blockquote>
+  <ul>
+    <li>input元素的type需要设置成search</li>
+    <li>input元素需要使用form元素将其包裹起来</li>
+    <li>form元素要有action属性</li>
+  </ul>
+</blockquote>
+
+<p>代码如下:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"."</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"keyword"</span> <span class="na">placeholder=</span><span class="s">"输入关键字搜索"</span> <span class="na">type=</span><span class="s">"search"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
