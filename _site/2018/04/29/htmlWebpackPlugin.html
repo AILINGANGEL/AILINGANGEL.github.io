@@ -9,18 +9,18 @@
 <meta name="generator" content="Jekyll v3.7.3" />
 <meta property="og:title" content="Htmlwebpackplugin" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="最近在做代码重构的项目需要在单页面引用的html文件里定义一些该项目使用的常亮.定义常亮的时候我使用了const关键字，这是es6的语法，但是这个时候项目报错了，错误信息如下 html webpack plugin reference error APP is not defined 查了很久，可能跟html-webpack-plugin 这个插件的配置有关 最后使用raw-loader来解决了这个问题" />
-<meta property="og:description" content="最近在做代码重构的项目需要在单页面引用的html文件里定义一些该项目使用的常亮.定义常亮的时候我使用了const关键字，这是es6的语法，但是这个时候项目报错了，错误信息如下 html webpack plugin reference error APP is not defined 查了很久，可能跟html-webpack-plugin 这个插件的配置有关 最后使用raw-loader来解决了这个问题" />
+<meta name="description" content="最近在做代码重构的项目需要在单页面引用的html文件里定义一些该项目使用的常量.定义常量的时候我使用了es6的模板字符串，但是这个时候项目报错了，错误信息如下 const APP = &#39;wa&#39;; const COOKIE_NAME = `${APP}_name`; 报错信息如下:" />
+<meta property="og:description" content="最近在做代码重构的项目需要在单页面引用的html文件里定义一些该项目使用的常量.定义常量的时候我使用了es6的模板字符串，但是这个时候项目报错了，错误信息如下 const APP = &#39;wa&#39;; const COOKIE_NAME = `${APP}_name`; 报错信息如下:" />
 <link rel="canonical" href="http://localhost:4000/2018/04/29/htmlWebpackPlugin.html" />
 <meta property="og:url" content="http://localhost:4000/2018/04/29/htmlWebpackPlugin.html" />
 <meta property="og:site_name" content="小飞侠的博客" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-04-29T00:00:00+08:00" />
 <script type="application/ld+json">
-{"description":"最近在做代码重构的项目需要在单页面引用的html文件里定义一些该项目使用的常亮.定义常亮的时候我使用了const关键字，这是es6的语法，但是这个时候项目报错了，错误信息如下 html webpack plugin reference error APP is not defined 查了很久，可能跟html-webpack-plugin 这个插件的配置有关 最后使用raw-loader来解决了这个问题","@type":"BlogPosting","url":"http://localhost:4000/2018/04/29/htmlWebpackPlugin.html","headline":"Htmlwebpackplugin","dateModified":"2018-04-29T00:00:00+08:00","datePublished":"2018-04-29T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/04/29/htmlWebpackPlugin.html"},"@context":"http://schema.org"}</script>
+{"description":"最近在做代码重构的项目需要在单页面引用的html文件里定义一些该项目使用的常量.定义常量的时候我使用了es6的模板字符串，但是这个时候项目报错了，错误信息如下 const APP = &#39;wa&#39;; const COOKIE_NAME = `${APP}_name`; 报错信息如下:","@type":"BlogPosting","url":"http://localhost:4000/2018/04/29/htmlWebpackPlugin.html","headline":"Htmlwebpackplugin","dateModified":"2018-04-29T00:00:00+08:00","datePublished":"2018-04-29T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/04/29/htmlWebpackPlugin.html"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=e293d31a9410f8784ff80b03e2f4bc2955519a3e">
+    <link rel="stylesheet" href="/assets/css/style.css?v=d2ee5825f29821d926e5086dc71545fcccc01252">
     <script src="/assets/js/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -46,11 +46,25 @@
       </header>
 
       <section>
-        <p>最近在做代码重构的项目需要在单页面引用的html文件里定义一些该项目使用的常亮.定义常亮的时候我使用了const关键字，这是es6的语法，但是这个时候项目报错了，错误信息如下</p>
+        <p>最近在做代码重构的项目需要在单页面引用的html文件里定义一些该项目使用的常量.定义常量的时候我使用了es6的模板字符串，但是这个时候项目报错了，错误信息如下</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">APP</span> <span class="o">=</span> <span class="s1">'wa'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">COOKIE_NAME</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">APP</span><span class="p">}</span><span class="s2">_name`</span><span class="p">;</span>
+</code></pre></div></div>
+<p>报错信息如下:</p>
+
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>html webpack plugin reference error APP is not defined
 </code></pre></div></div>
-<p>查了很久，可能跟html-webpack-plugin 这个插件的配置有关
-最后使用raw-loader来解决了这个问题</p>
+
+<p>查了很久，可能跟html-webpack-plugin 这个插件的配置有关, 当该插件解析index.html文档的时候,不能识别这个模板字符串里面的变量,
+因此使用raw-loader来对html文件进行处理,以便变量能被识别.(我自己都觉得写的不清楚，因为官网的api显示raw-loader是用来处理诸如txt文件之类的)</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">new</span> <span class="nx">HtmlWebpackPlugin</span><span class="p">({</span>
+    <span class="c1">// For details on `!!` see https://webpack.github.io/docs/loaders.html#loader-order</span>
+    <span class="na">template</span><span class="p">:</span> <span class="s1">'!!raw-loader!src/index.hbs'</span>
+  <span class="p">})</span>
+</code></pre></div></div>
+
+<p>顺便简单说下Html-webpack-plugin, <strong>webpack只是会帮忙生成依赖的关系图和最终的js文件,但是Html-webpack-plugin能帮住我们解析index.html文件，并把生成的js文件注入到这个html文件中</strong></p>
 
       </section>
 
