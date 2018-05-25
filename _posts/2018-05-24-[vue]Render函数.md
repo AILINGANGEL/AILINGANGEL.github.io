@@ -1,4 +1,4 @@
-##1.虚拟Dom
+## 1.虚拟Dom
 - vue会把单文件组件中的template或者用render函数写的都转换成虚拟dom
 - 虚拟dom也是一个Js 对象
 
@@ -24,7 +24,7 @@ var vNode = {
 }
 ```
 
-##2. vNode的类型
+## 2. vNode的类型
 
 - TextVNode 文本节点
 - ComponentVNode 组件节点
@@ -32,4 +32,4 @@ var vNode = {
 - EmptyVNode 没有内容的注释节点
 - CloneVNode 克隆节点，可以是以上任意类型的节点，唯一的区别在于isCloned属性为true
 
-##3. 为什么用render函数
+## 3. 为什么用render函数
