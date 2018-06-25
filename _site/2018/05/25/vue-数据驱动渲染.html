@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>[vue]数据驱动渲染 | 小飞侠的博客</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="[vue]数据驱动渲染" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Vue是数据驱动的，也就是说当数据发生变化，dom就会重绘。" />
+<meta property="og:description" content="Vue是数据驱动的，也就是说当数据发生变化，dom就会重绘。" />
+<link rel="canonical" href="http://localhost:4000/2018/05/25/vue-%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E6%B8%B2%E6%9F%93.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/25/vue-%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E6%B8%B2%E6%9F%93.html" />
+<meta property="og:site_name" content="小飞侠的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-25T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"Vue是数据驱动的，也就是说当数据发生变化，dom就会重绘。","@type":"BlogPosting","url":"http://localhost:4000/2018/05/25/vue-%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E6%B8%B2%E6%9F%93.html","headline":"[vue]数据驱动渲染","dateModified":"2018-05-25T00:00:00+08:00","datePublished":"2018-05-25T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/25/vue-%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E6%B8%B2%E6%9F%93.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=488ca3eca1344e8385010f50d5f32e887f7b82a5">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">小飞侠的博客</h1>
+        <p class="header">一个女码农的自我修养</p>
+
+        <ul>
+          
+          <li><a class="buttons github" href="http://github.com/AILINGANGEL/AILINGANGEL.github.io">View On GitHub</a></li>
+        </ul>
+
+        
+          <p class="header">This project is maintained by <a class="header name" href="http://github.com/AILINGANGEL">AILINGANGEL</a></p>
+        
+
+        
+      </header>
+
+      <section>
+        <p>Vue是数据驱动的，也就是说当数据发生变化，dom就会重绘。</p>
+
+<p>今天在做公司项目的时候，侦听了属性zoom,本来想zoom的值发生变化，就重新绘制canvas中的点。我在一个方法中用一个循环来不停的修改zoom值，我以为每个循环这个zoom值的变化会触发侦听器中重绘的操作，但结果并不是预想的那样，<code class="highlighter-rouge">重绘的方法只会在循环结束后调用一次</code>，于是，我写了一个小实例，我发现<code class="highlighter-rouge">不仅仅是侦听属性，只要用循环不断的修改data中的数据,dom也并不是每次都重绘，而是只会重绘最后一次</code>，这应该是vue关于性能方面的考虑.</p>
+
+<p><a href="https://github.com/AILINGANGEL/VuePractice/blob/master/Watch.html">小实例</a></p>
+
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>

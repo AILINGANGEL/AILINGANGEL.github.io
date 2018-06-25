@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>[js]函数科里化 | 小飞侠的博客</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="[js]函数科里化" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1.什么是柯里化 把接受多个参数的函数变成接受一个单一参数的函数，并返回接受余下参数而且返回结果的新函数" />
+<meta property="og:description" content="1.什么是柯里化 把接受多个参数的函数变成接受一个单一参数的函数，并返回接受余下参数而且返回结果的新函数" />
+<link rel="canonical" href="http://localhost:4000/2018/05/26/js-%E5%87%BD%E6%95%B0%E7%A7%91%E9%87%8C%E5%8C%96.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/26/js-%E5%87%BD%E6%95%B0%E7%A7%91%E9%87%8C%E5%8C%96.html" />
+<meta property="og:site_name" content="小飞侠的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-26T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"1.什么是柯里化 把接受多个参数的函数变成接受一个单一参数的函数，并返回接受余下参数而且返回结果的新函数","@type":"BlogPosting","url":"http://localhost:4000/2018/05/26/js-%E5%87%BD%E6%95%B0%E7%A7%91%E9%87%8C%E5%8C%96.html","headline":"[js]函数科里化","dateModified":"2018-05-26T00:00:00+08:00","datePublished":"2018-05-26T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/26/js-%E5%87%BD%E6%95%B0%E7%A7%91%E9%87%8C%E5%8C%96.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=488ca3eca1344e8385010f50d5f32e887f7b82a5">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">小飞侠的博客</h1>
+        <p class="header">一个女码农的自我修养</p>
+
+        <ul>
+          
+          <li><a class="buttons github" href="http://github.com/AILINGANGEL/AILINGANGEL.github.io">View On GitHub</a></li>
+        </ul>
+
+        
+          <p class="header">This project is maintained by <a class="header name" href="http://github.com/AILINGANGEL">AILINGANGEL</a></p>
+        
+
+        
+      </header>
+
+      <section>
+        <h2 id="1什么是柯里化">1.什么是柯里化</h2>
+<p>把接受多个参数的函数变成接受一个单一参数的函数，并返回接受余下参数而且返回结果的新函数</p>
+
+<p>例子1：</p>
+
+<pre><code class="language-javasrcript">
+function add(a, b) {
+    return a + b;
+}
+
+function curryingAdd(a) {
+    return function(b) {
+        return a + b;
+    }
+}
+
+console.log(add(1, 2)); //3
+console.log(curryingAdd(1)(2))//3
+
+</code></pre>
+
+<h2 id="2为什么需要函数柯里化">2.为什么需要函数柯里化</h2>
+<blockquote>
+  <ul>
+    <li>提前绑定好函数里面的某些参数,达到参数复用的效果，提高适用性</li>
+    <li>固定易变因素</li>
+    <li>延迟计算</li>
+    <li>函数柯里化能让应用被重新组合,把复杂的功能拆分成一个个的小部分，每个小部分都是简单的，便于理解的，而且是容易测试的</li>
+  </ul>
+</blockquote>
+
+<h2 id="3如何进行函数柯里化">3.如何进行函数柯里化</h2>
+
+<p>功能需求：输出语句name喜欢song, 其中name和song是可变参数</p>
+
+<ul>
+  <li>一般情况:</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">printInfo</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">song</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">'喜欢的歌曲是:'</span> <span class="o">+</span> <span class="nx">song</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">printInfo</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">,</span> <span class="s1">'七里香'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>[开胃菜]柯里化后：</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">curringPrintInfo</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">song</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">'喜欢的歌曲是:'</span> <span class="o">+</span> <span class="nx">song</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">curringPrintInfo</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)(</span><span class="s1">'黑色幽默'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>上面的代码虽然对函数printInfo进行了柯里化，但是在对函数进行柯里化的时候不停的进行函数嵌套也是噩梦，所以我们需要一个可以帮助其他函数进行柯里化的函数</p>
+
+<ul>
+  <li>[小鸡炖蘑菇]curryingHelper</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">curryingHelper</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//不取第一个参数，第一个参数是函数本身</span>
+    <span class="kd">var</span> <span class="nx">_args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">_newArgs</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">_totalArgs</span> <span class="o">=</span> <span class="nx">_args</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">_newArgs</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">_totalArgs</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">showMsg</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">age</span><span class="p">,</span> <span class="nx">fruit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'My name is '</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s1">', I</span><span class="se">\'</span><span class="s1">m '</span> <span class="o">+</span> <span class="nx">age</span> <span class="o">+</span> <span class="s1">' years old, '</span> <span class="o">+</span> <span class="s1">' and I like eat '</span> <span class="o">+</span> <span class="nx">fruit</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">curryingShowMsg1</span> <span class="o">=</span> <span class="nx">curryingHelper</span><span class="p">(</span><span class="nx">showMsg</span><span class="p">,</span> <span class="s1">'ailing'</span><span class="p">);</span>
+<span class="nx">curryingShowMsg1</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="s1">'apple'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">curryingShowMsg2</span> <span class="o">=</span> <span class="nx">curryingHelper</span><span class="p">(</span><span class="nx">showMsg</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">'ailing'</span><span class="p">);</span>
+<span class="nx">curryingShowMsg2</span><span class="p">(</span><span class="s1">'apple'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>函数的arguments表示的是传递到函数中的参数翠香，它不是一个数组，它是一个类数组对象，所以我们使用Array.prototype.slice来获取arguments里面的内容
+使用fn.apply(this, _totalArgs)来给函数fn传递正确的内容
+上面的curryinghelper是一个<code class="highlighter-rouge">高级函数</code></p>
+</blockquote>
+
+<ul>
+  <li>[牛肉火锅]</li>
+</ul>
+
+<p>上面的柯里化帮助函数已经能满足一般性需求了，但是希望那些经过柯里化后的函数可以每次值传递进去一个参数，然后可以进行多次参数的传递</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">betterCurryingHelper</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">//fn.length表示函数的参数长度</span>
+    <span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">len</span> <span class="o">||</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">allArgsFulfilled</span> <span class="o">=</span> <span class="p">(</span><span class="kr">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;=</span> <span class="nx">length</span><span class="p">);</span>
+        <span class="c1">//如果参数全部满足,就可以终止递归调用</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">allArgsFulfilled</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">fn</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="kr">arguments</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">argsNeedFulfilled</span> <span class="o">=</span> <span class="p">[</span><span class="nx">fn</span><span class="p">].</span><span class="nx">concat</span><span class="p">(</span><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">));</span>
+            <span class="k">return</span> <span class="nx">betterCurryingHelper</span><span class="p">(</span><span class="nx">curryingHelper</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">argsNeedFulfilled</span><span class="p">),</span> <span class="nx">length</span> <span class="o">-</span> <span class="kr">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">betterShowMsg</span> <span class="o">=</span> <span class="nx">betterCurryingHelper</span><span class="p">(</span><span class="nx">showMsg</span><span class="p">);</span>
+<span class="nx">betterShowMsg</span><span class="p">(</span><span class="s1">'dreamapple'</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">'apple'</span><span class="p">);</span> 
+<span class="nx">betterShowMsg</span><span class="p">(</span><span class="s1">'dreamapple'</span><span class="p">,</span> <span class="mi">12</span><span class="p">)(</span><span class="s1">'apple'</span><span class="p">);</span>
+<span class="nx">betterShowMsg</span><span class="p">(</span><span class="s1">'dreamapple'</span><span class="p">)(</span><span class="mi">12</span><span class="p">,</span> <span class="s1">'apple'</span><span class="p">);</span>
+<span class="nx">betterShowMsg</span><span class="p">(</span><span class="s1">'dreamapple'</span><span class="p">)(</span><span class="mi">12</span><span class="p">)(</span><span class="s1">'apple'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="4柯里化的应用场景">4.柯里化的应用场景</h2>
+
+<ul>
+  <li>给setTimeout传递进来的函数添加参数</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">hello</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Hello, '</span> <span class="o">+</span> <span class="nx">name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">setTimeout</span><span class="p">(</span><span class="nx">hello</span><span class="p">(</span><span class="s1">'ailing'</span><span class="p">),</span> <span class="mi">3600</span><span class="p">);</span> <span class="c1">//立即执行不会在3.6s后执行,其实会报错因为hello不会返回函数</span>
+<span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">hello</span><span class="p">(</span><span class="s1">'ailing'</span><span class="p">)</span>
+<span class="p">},</span> <span class="mi">3600</span><span class="p">)</span><span class="c1">// 3.6s后执行</span>
+
+<span class="nx">setTimeout</span><span class="p">(</span><span class="nx">hello</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="s1">'ailing1'</span><span class="p">),</span> <span class="mi">3600</span><span class="p">)</span><span class="c1">//3.6s后执行，bind返回一个新函数</span>
+
+<span class="nx">setTimeout</span><span class="p">(</span><span class="nx">curryingHelper</span><span class="p">(</span><span class="nx">hello</span><span class="p">,</span> <span class="s1">'dreamapple'</span><span class="p">),</span> <span class="mi">3600</span><span class="p">)</span> <span class="c1">//使用函数的柯里化来完成这个效果,因为curryingHelper返回一个函数</span>
+</code></pre></div></div>
+
+<ul>
+  <li>写这样一个函数</li>
+</ul>
+
+<p>mutiply(1)(2)(3) == 6, mutiply(1)(2)(3)…(n) == 1 * 2 * 3 * … * n;</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">multiply</span><span class="p">(</span><span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">y</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="nx">y</span><span class="p">.</span><span class="nx">valueOf</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">multiply</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">add</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">_that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">newArgs</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="kr">arguments</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">newArgs</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="kr">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">total</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">result</span> <span class="o">*=</span> <span class="nx">total</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">add</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="nx">_that</span><span class="p">,</span> <span class="nx">total</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">)(</span><span class="mi">3</span><span class="p">)()</span> <span class="o">==</span> <span class="mi">6</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>延迟计算
+上面的multiply和ad就是延迟计算的例子</p>
+  </li>
+  <li>提前绑定好函数里面的某些参数,达到参数复用的效果,提高了适用性</li>
+  <li>固定易变因素： bind方法就是一个固定易变因素的很好的例子</li>
+</ul>
+
+<h2 id="5柯里化的性能">5.柯里化的性能</h2>
+<ul>
+  <li>操作arguments对象通常比操作命名的参数要慢一点</li>
+  <li>在老版本的浏览器中arguments.length实现很慢，直接调用函数fn要比使用fn.apply或者fn.call要快一点</li>
+  <li>产生大量的嵌套</li>
+  <li>作用域和闭包会带来一些性能还有速度的降低，但是大多数的web应用的性能瓶颈发生在操作dom上的，所以上面的那些开销比起dom操作的开销要小一些</li>
+</ul>
+
+<h2 id="6其他知识点">6.其他知识点</h2>
+<ul>
+  <li>fn.length表示的是这个函数中参数的个数</li>
+  <li>arguments.callee指向的是当前运行的函数 callee是arguments对象的属性,在该函数的函数体内，它可以指向当前正在执行的函数，当函数是匿名函数时，这是很有用的</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">hello</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
+      <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="kr">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'from a anonymous function.'</span><span class="p">);</span>
+          <span class="k">return</span> <span class="kr">arguments</span><span class="p">.</span><span class="nx">callee</span><span class="p">;</span>
+      <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>fn.caller 返回调用指定函数的函数</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">hello</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'hello'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">hello</span><span class="p">.</span><span class="nx">caller</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">callHello</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">fn</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">callHello</span><span class="p">(</span><span class="nx">hello</span><span class="p">);</span> <span class="c1">// hello [Function: callHello]</span>
+</code></pre></div></div>
+
+<ul>
+  <li>高阶函数</li>
+</ul>
+
+<blockquote>
+  <p>高阶函数就是操作函数的函数,它接受一个或者多个函数作为参数，并返回一个新的函数</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">f1</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">f2</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">func3</span><span class="p">(</span><span class="nx">func1</span><span class="p">,</span> <span class="nx">func2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">func2</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">func1</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="kr">arguments</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">f3</span> <span class="o">=</span> <span class="nx">func3</span><span class="p">(</span><span class="nx">f1</span><span class="p">,</span> <span class="nx">f2</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">f3</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">));</span> <span class="c1">// 25</span>
+</code></pre></div></div>
+
+<ul>
+  <li>不完全函数
+    <blockquote>
+      <p>不完全函数就是给想要运行的那个函数绑定一个固定的参数值,然后后面的运行或者传递参数都是要在前面的基础上进行运行的</p>
+    </blockquote>
+  </li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">array</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">slice</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">n</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//要运行的函数</span>
+<span class="kd">function</span> <span class="nx">showMsg</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">*</span> <span class="p">(</span> <span class="nx">b</span> <span class="o">-</span> <span class="nx">c</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">partialLeft</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="kr">arguments</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">array</span><span class="p">(</span><span class="nx">args</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">array</span><span class="p">(</span><span class="kr">arguments</span><span class="p">));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//打印实际传递到函数中的参数列表</span>
+        <span class="k">return</span> <span class="nx">f</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">a</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">partialRight</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="kr">arguments</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">array</span><span class="p">(</span><span class="kr">arguments</span><span class="p">);</span>
+        <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">array</span><span class="p">(</span><span class="nx">args</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span> <span class="c1">//打印实际传递到函数中的参数列表</span>
+        <span class="k">return</span> <span class="nx">f</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">a</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">partial</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="kr">arguments</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">array</span><span class="p">(</span><span class="nx">args</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="kr">arguments</span><span class="p">[</span><span class="nx">j</span><span class="o">++</span><span class="p">];</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">a</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">array</span><span class="p">(</span><span class="kr">arguments</span><span class="p">,</span> <span class="nx">j</span><span class="p">));</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span> <span class="c1">//打印实际传递到函数中的参数列表</span>
+        <span class="k">return</span> <span class="nx">f</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">a</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">partialLeft</span><span class="p">(</span><span class="nx">showMsg</span><span class="p">,</span> <span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// 实际参数列表: [1, 2, 3] 所以结果是 1 * (2 - 3) = -1</span>
+<span class="nx">partialRight</span><span class="p">(</span><span class="nx">showMsg</span><span class="p">,</span> <span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// 实际参数列表: [2, 3, 1] 所以结果是 2 * (3 - 1) = 4</span>
+<span class="nx">partial</span><span class="p">(</span><span class="nx">showMsg</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">1</span><span class="p">)(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="c1">// 实际参数列表: [2, 1, 3] 所以结果是 2 * (1 - 3) = -4</span>
+</code></pre></div></div>
+
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>

@@ -5,22 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>在iview的table组件中显示html格式 | 小飞侠的博客</title>
+<title>[vue]在iview的table组件中显示html格式 | 小飞侠的博客</title>
 <meta name="generator" content="Jekyll v3.7.3" />
-<meta property="og:title" content="在iview的table组件中显示html格式" />
+<meta property="og:title" content="[vue]在iview的table组件中显示html格式" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="接到项目需求，需要用富文本编辑器设置一堆有格式的文本，然后在表格的列表页中展示这个格式。由于富文本编辑器显示的格式都是带html标签的字符串，在iview组件中要渲染文本 肯定不能把html标签页显示出来。总结一句话，其实这个就是考如何用vue的render函数渲染html内容,最开始的想法是v-html指令，但是尝试了说不能解析html指令，于是找到了另 一种方法，用innerHtml属性 render: (h, params) =&gt; { return h(&#39;div&#39;, { domProps: { innerHTML: params.row.task_desc } }) }" />
 <meta property="og:description" content="接到项目需求，需要用富文本编辑器设置一堆有格式的文本，然后在表格的列表页中展示这个格式。由于富文本编辑器显示的格式都是带html标签的字符串，在iview组件中要渲染文本 肯定不能把html标签页显示出来。总结一句话，其实这个就是考如何用vue的render函数渲染html内容,最开始的想法是v-html指令，但是尝试了说不能解析html指令，于是找到了另 一种方法，用innerHtml属性 render: (h, params) =&gt; { return h(&#39;div&#39;, { domProps: { innerHTML: params.row.task_desc } }) }" />
-<link rel="canonical" href="http://localhost:4000/2018/05/10/%E5%9C%A8iview%E7%9A%84table%E7%BB%84%E4%BB%B6%E4%B8%AD%E6%98%BE%E7%A4%BAhtml%E6%A0%BC%E5%BC%8F.html" />
-<meta property="og:url" content="http://localhost:4000/2018/05/10/%E5%9C%A8iview%E7%9A%84table%E7%BB%84%E4%BB%B6%E4%B8%AD%E6%98%BE%E7%A4%BAhtml%E6%A0%BC%E5%BC%8F.html" />
+<link rel="canonical" href="http://localhost:4000/2018/05/10/vue-%E5%9C%A8iview%E7%9A%84table%E7%BB%84%E4%BB%B6%E4%B8%AD%E6%98%BE%E7%A4%BAhtml%E6%A0%BC%E5%BC%8F.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/10/vue-%E5%9C%A8iview%E7%9A%84table%E7%BB%84%E4%BB%B6%E4%B8%AD%E6%98%BE%E7%A4%BAhtml%E6%A0%BC%E5%BC%8F.html" />
 <meta property="og:site_name" content="小飞侠的博客" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2018-05-10T00:00:00+08:00" />
 <script type="application/ld+json">
-{"description":"接到项目需求，需要用富文本编辑器设置一堆有格式的文本，然后在表格的列表页中展示这个格式。由于富文本编辑器显示的格式都是带html标签的字符串，在iview组件中要渲染文本 肯定不能把html标签页显示出来。总结一句话，其实这个就是考如何用vue的render函数渲染html内容,最开始的想法是v-html指令，但是尝试了说不能解析html指令，于是找到了另 一种方法，用innerHtml属性 render: (h, params) =&gt; { return h(&#39;div&#39;, { domProps: { innerHTML: params.row.task_desc } }) }","@type":"BlogPosting","url":"http://localhost:4000/2018/05/10/%E5%9C%A8iview%E7%9A%84table%E7%BB%84%E4%BB%B6%E4%B8%AD%E6%98%BE%E7%A4%BAhtml%E6%A0%BC%E5%BC%8F.html","headline":"在iview的table组件中显示html格式","dateModified":"2018-05-10T00:00:00+08:00","datePublished":"2018-05-10T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/10/%E5%9C%A8iview%E7%9A%84table%E7%BB%84%E4%BB%B6%E4%B8%AD%E6%98%BE%E7%A4%BAhtml%E6%A0%BC%E5%BC%8F.html"},"@context":"http://schema.org"}</script>
+{"description":"接到项目需求，需要用富文本编辑器设置一堆有格式的文本，然后在表格的列表页中展示这个格式。由于富文本编辑器显示的格式都是带html标签的字符串，在iview组件中要渲染文本 肯定不能把html标签页显示出来。总结一句话，其实这个就是考如何用vue的render函数渲染html内容,最开始的想法是v-html指令，但是尝试了说不能解析html指令，于是找到了另 一种方法，用innerHtml属性 render: (h, params) =&gt; { return h(&#39;div&#39;, { domProps: { innerHTML: params.row.task_desc } }) }","@type":"BlogPosting","url":"http://localhost:4000/2018/05/10/vue-%E5%9C%A8iview%E7%9A%84table%E7%BB%84%E4%BB%B6%E4%B8%AD%E6%98%BE%E7%A4%BAhtml%E6%A0%BC%E5%BC%8F.html","headline":"[vue]在iview的table组件中显示html格式","dateModified":"2018-05-10T00:00:00+08:00","datePublished":"2018-05-10T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/10/vue-%E5%9C%A8iview%E7%9A%84table%E7%BB%84%E4%BB%B6%E4%B8%AD%E6%98%BE%E7%A4%BAhtml%E6%A0%BC%E5%BC%8F.html"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=d2ee5825f29821d926e5086dc71545fcccc01252">
+    <link rel="stylesheet" href="/assets/css/style.css?v=488ca3eca1344e8385010f50d5f32e887f7b82a5">
     <script src="/assets/js/scale.fix.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
@@ -57,6 +57,10 @@
     <span class="p">})</span>
   <span class="p">}</span>
 </code></pre></div></div>
+
+<p><code class="highlighter-rouge">
+render函数中不存在指令！！！
+</code></p>
 
       </section>
 

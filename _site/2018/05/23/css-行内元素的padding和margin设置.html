@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>[css]行内元素的padding和margin设置 | 小飞侠的博客</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="[css]行内元素的padding和margin设置" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="行内元素的margin和padding属性 行内元素也有盒子模型 行内元素垂直方向上的设置，比如margin-top, margin-bottom, padding-top, padding-bottom的设置是无效的 行内元素水平方向上的设置, 比如margin-left, margin-right, padding-left, padding-right的设置是有效果的 行内元素的padding-top、padding-bottom从显示的效果上是增加的，但其实设置的是无效的。并不会对他周围的元素产生任何影响" />
+<meta property="og:description" content="行内元素的margin和padding属性 行内元素也有盒子模型 行内元素垂直方向上的设置，比如margin-top, margin-bottom, padding-top, padding-bottom的设置是无效的 行内元素水平方向上的设置, 比如margin-left, margin-right, padding-left, padding-right的设置是有效果的 行内元素的padding-top、padding-bottom从显示的效果上是增加的，但其实设置的是无效的。并不会对他周围的元素产生任何影响" />
+<link rel="canonical" href="http://localhost:4000/2018/05/23/css-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E7%9A%84padding%E5%92%8Cmargin%E8%AE%BE%E7%BD%AE.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/23/css-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E7%9A%84padding%E5%92%8Cmargin%E8%AE%BE%E7%BD%AE.html" />
+<meta property="og:site_name" content="小飞侠的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-23T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"行内元素的margin和padding属性 行内元素也有盒子模型 行内元素垂直方向上的设置，比如margin-top, margin-bottom, padding-top, padding-bottom的设置是无效的 行内元素水平方向上的设置, 比如margin-left, margin-right, padding-left, padding-right的设置是有效果的 行内元素的padding-top、padding-bottom从显示的效果上是增加的，但其实设置的是无效的。并不会对他周围的元素产生任何影响","@type":"BlogPosting","url":"http://localhost:4000/2018/05/23/css-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E7%9A%84padding%E5%92%8Cmargin%E8%AE%BE%E7%BD%AE.html","headline":"[css]行内元素的padding和margin设置","dateModified":"2018-05-23T00:00:00+08:00","datePublished":"2018-05-23T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/23/css-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E7%9A%84padding%E5%92%8Cmargin%E8%AE%BE%E7%BD%AE.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=488ca3eca1344e8385010f50d5f32e887f7b82a5">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">小飞侠的博客</h1>
+        <p class="header">一个女码农的自我修养</p>
+
+        <ul>
+          
+          <li><a class="buttons github" href="http://github.com/AILINGANGEL/AILINGANGEL.github.io">View On GitHub</a></li>
+        </ul>
+
+        
+          <p class="header">This project is maintained by <a class="header name" href="http://github.com/AILINGANGEL">AILINGANGEL</a></p>
+        
+
+        
+      </header>
+
+      <section>
+        <h2 id="行内元素的margin和padding属性">行内元素的margin和padding属性</h2>
+<ul>
+  <li>行内元素也有盒子模型</li>
+  <li>行内元素垂直方向上的设置，比如margin-top, margin-bottom, padding-top, padding-bottom的设置是无效的</li>
+  <li>行内元素水平方向上的设置, 比如margin-left, margin-right, padding-left, padding-right的设置是有效果的</li>
+  <li>行内元素的padding-top、padding-bottom从显示的效果上是增加的，但其实设置的是无效的。并不会对他周围的元素产生任何影响</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;</span><span class="err">&lt;</span><span class="na">head</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Document<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;style&gt;</span>
+        <span class="nt">span</span><span class="p">{</span>
+            <span class="nl">background-color</span><span class="p">:</span> <span class="no">red</span><span class="p">;</span>
+            <span class="nl">margin</span><span class="p">:</span><span class="m">10px</span><span class="p">;</span>
+            <span class="nl">padding</span><span class="p">:</span> <span class="m">30px</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;span&gt;</span>我是span<span class="nt">&lt;/span&gt;</span>
+    <span class="nt">&lt;div&gt;</span>我是div<span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>[vue]render函数 | 小飞侠的博客</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="[vue]render函数" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1.虚拟Dom vue会把单文件组件中的template或者用render函数写的都转换成虚拟dom 虚拟dom也是一个Js 对象" />
+<meta property="og:description" content="1.虚拟Dom vue会把单文件组件中的template或者用render函数写的都转换成虚拟dom 虚拟dom也是一个Js 对象" />
+<link rel="canonical" href="http://localhost:4000/2018/05/24/vue-Render%E5%87%BD%E6%95%B0.html" />
+<meta property="og:url" content="http://localhost:4000/2018/05/24/vue-Render%E5%87%BD%E6%95%B0.html" />
+<meta property="og:site_name" content="小飞侠的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-05-24T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"1.虚拟Dom vue会把单文件组件中的template或者用render函数写的都转换成虚拟dom 虚拟dom也是一个Js 对象","@type":"BlogPosting","url":"http://localhost:4000/2018/05/24/vue-Render%E5%87%BD%E6%95%B0.html","headline":"[vue]render函数","dateModified":"2018-05-24T00:00:00+08:00","datePublished":"2018-05-24T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/05/24/vue-Render%E5%87%BD%E6%95%B0.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=488ca3eca1344e8385010f50d5f32e887f7b82a5">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">小飞侠的博客</h1>
+        <p class="header">一个女码农的自我修养</p>
+
+        <ul>
+          
+          <li><a class="buttons github" href="http://github.com/AILINGANGEL/AILINGANGEL.github.io">View On GitHub</a></li>
+        </ul>
+
+        
+          <p class="header">This project is maintained by <a class="header name" href="http://github.com/AILINGANGEL">AILINGANGEL</a></p>
+        
+
+        
+      </header>
+
+      <section>
+        <h2 id="1虚拟dom">1.虚拟Dom</h2>
+<ul>
+  <li>vue会把单文件组件中的template或者用render函数写的都转换成虚拟dom</li>
+  <li>虚拟dom也是一个Js 对象</li>
+</ul>
+
+<p>普通dom</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;p&gt;</span>文本内容<span class="nt">&lt;p&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>虚拟dom是一个标准的js对象</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">vNode</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="na">tag</span><span class="p">:</span> <span class="s1">'div'</span><span class="p">,</span>
+   <span class="na">attributes</span><span class="p">:</span> <span class="p">{</span>
+       <span class="na">id</span><span class="p">:</span> <span class="s1">'main'</span>
+   <span class="p">},</span>
+   <span class="na">children</span><span class="p">:</span> <span class="p">[</span>
+   <span class="c1">//p节点</span>
+   <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="2-vnode的类型">2. vNode的类型</h2>
+
+<ul>
+  <li>TextVNode 文本节点</li>
+  <li>ComponentVNode 组件节点</li>
+  <li>ElementVNode 普通元素节点</li>
+  <li>EmptyVNode 没有内容的注释节点</li>
+  <li>CloneVNode 克隆节点，可以是以上任意类型的节点，唯一的区别在于isCloned属性为true</li>
+</ul>
+
+<h2 id="3-为什么用render函数">3. 为什么用render函数</h2>
+
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>

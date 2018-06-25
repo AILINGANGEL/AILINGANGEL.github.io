@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>[js]词法作用域 | 小飞侠的博客</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="[js]词法作用域" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="1. 引擎 编译器 和 作用域 引擎：执行js代码 编译器: 解析和生成可执行的代码 作用域: 生成，并且维护一个声明变量的清单，并且会严格的控制当前执行的代码可以访问哪些变量" />
+<meta property="og:description" content="1. 引擎 编译器 和 作用域 引擎：执行js代码 编译器: 解析和生成可执行的代码 作用域: 生成，并且维护一个声明变量的清单，并且会严格的控制当前执行的代码可以访问哪些变量" />
+<link rel="canonical" href="http://localhost:4000/2018/06/25/js-%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F.html" />
+<meta property="og:url" content="http://localhost:4000/2018/06/25/js-%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F.html" />
+<meta property="og:site_name" content="小飞侠的博客" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-06-25T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"1. 引擎 编译器 和 作用域 引擎：执行js代码 编译器: 解析和生成可执行的代码 作用域: 生成，并且维护一个声明变量的清单，并且会严格的控制当前执行的代码可以访问哪些变量","@type":"BlogPosting","url":"http://localhost:4000/2018/06/25/js-%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F.html","headline":"[js]词法作用域","dateModified":"2018-06-25T00:00:00+08:00","datePublished":"2018-06-25T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/06/25/js-%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=488ca3eca1344e8385010f50d5f32e887f7b82a5">
+    <script src="/assets/js/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">小飞侠的博客</h1>
+        <p class="header">一个女码农的自我修养</p>
+
+        <ul>
+          
+          <li><a class="buttons github" href="http://github.com/AILINGANGEL/AILINGANGEL.github.io">View On GitHub</a></li>
+        </ul>
+
+        
+          <p class="header">This project is maintained by <a class="header name" href="http://github.com/AILINGANGEL">AILINGANGEL</a></p>
+        
+
+        
+      </header>
+
+      <section>
+        <h3 id="1-引擎-编译器-和-作用域">1. 引擎 编译器 和 作用域</h3>
+<ul>
+  <li>引擎：执行js代码</li>
+  <li>编译器: 解析和生成可执行的代码</li>
+  <li>作用域: 生成，并且维护一个声明变量的清单，并且会严格的控制当前执行的代码可以访问哪些变量</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<p>上述代码执行的过程:</p>
+
+<ul>
+  <li>
+    <p>编译器询问作用域是否有a的存在，如果有就忽略，如果没有就让作用域声明一个变量a</p>
+  </li>
+  <li>
+    <p>引擎向作用域查找a,然后进行a = 2的赋值操作</p>
+  </li>
+</ul>
+
+<h3 id="2-词法作用域">2. 词法作用域</h3>
+<p>词法作用域和函数在哪里以及如何调用无关，只和函数定义有关.</p>
+
+<p>Lexical scope means that scope is defined by author-time decisions of where functions are declared. The lexing phase of compilation is essentially able to know where and how all identifiers are declared, and thus predict how they will be looked-up during execution.</p>
+
+<h3 id="3-欺骗词法作用域">3. 欺骗词法作用域</h3>
+<p>欺骗词法作用域会导致性能下降。</p>
+<ul>
+  <li>eval</li>
+  <li>setTimeout</li>
+  <li>setInterval</li>
+  <li>new Function</li>
+  <li>with</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">foo</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">with</span> <span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">a</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">a</span><span class="p">:</span> <span class="mi">3</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">o2</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">b</span><span class="p">:</span> <span class="mi">3</span>
+<span class="p">};</span>
+
+<span class="nx">foo</span><span class="p">(</span> <span class="nx">o1</span> <span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">o1</span><span class="p">.</span><span class="nx">a</span> <span class="p">);</span> <span class="c1">// 2</span>
+
+<span class="nx">foo</span><span class="p">(</span> <span class="nx">o2</span> <span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">o2</span><span class="p">.</span><span class="nx">a</span> <span class="p">);</span> <span class="c1">// undefined</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="nx">a</span> <span class="p">);</span> <span class="c1">// 2 -- Oops, leaked global!</span>
+</code></pre></div></div>
+<p>在编译阶段，js引擎将会有一系列的性能优化操作，比如提前来决定函数或者变量在哪里，以至于在执行阶段可以不用花费太多的精力去解析变量。但是如果在程序中出现了上述的几个函数，那么js引擎会认为之前解析的变量的位置都是非法的,所以引擎干脆就不会做任何性能优化了.</p>
+
+
+      </section>
+
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
